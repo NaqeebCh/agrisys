@@ -1,0 +1,21 @@
+# Standard IDE/System folder ignores
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Database & Testing Files
+test_data.json
+knowledge/
+brain/
+artifacts/
+
+# Firebase configuration that might contain secrets
+.firebaserc
+firebase-debug.log
+
+# Temporary/Cache Files
+node_modules/
+dist/
+tmp/
+*.log
