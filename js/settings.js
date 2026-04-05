@@ -1,10 +1,9 @@
 // ===== Settings Module =====
 const Settings = {
     defaults: {
-        bizName: 'Saim Commission Shop',
-        bizNameUrdu: 'صائم کمیشن شاپ',
-        addressUrdu: 'باٹی پاس چونیاں، چونیاں، ضلع قصور',
-        phone: '0300-4804457',
+        bizName: '',
+        address: '',
+        phone: '',
         crops: 'Wheat,Rice,Cotton,Potato,Maize,Sugarcane,Misc',
         expenseTypes: 'Labour,Transport,Diesel,Rent,Utility,Misc',
         perBagWeight: 100,
@@ -17,17 +16,15 @@ const Settings = {
         const defs = await DB.getSetting('defaults');
         if (biz) {
             document.getElementById('set-biz-name').value = biz.bizName || '';
-            document.getElementById('set-biz-name-urdu').value = biz.bizNameUrdu || '';
-            document.getElementById('set-address-urdu').value = biz.addressUrdu || '';
+            document.getElementById('set-address').value = biz.address || '';
             document.getElementById('set-phone').value = biz.phone || '';
             document.getElementById('set-owner-name').value = biz.ownerName || '';
             document.getElementById('set-crops').value = biz.crops || '';
             document.getElementById('set-expense-types').value = biz.expenseTypes || this.defaults.expenseTypes;
         } else {
-            document.getElementById('set-biz-name').value = this.defaults.bizName;
-            document.getElementById('set-biz-name-urdu').value = this.defaults.bizNameUrdu;
-            document.getElementById('set-address-urdu').value = this.defaults.addressUrdu;
-            document.getElementById('set-phone').value = this.defaults.phone;
+            document.getElementById('set-biz-name').value = '';
+            document.getElementById('set-address').value = '';
+            document.getElementById('set-phone').value = '';
             document.getElementById('set-owner-name').value = '';
             document.getElementById('set-crops').value = this.defaults.crops;
             document.getElementById('set-expense-types').value = this.defaults.expenseTypes;
@@ -37,11 +34,12 @@ const Settings = {
             document.getElementById('set-bardana').value = defs.defaultBardana || 1;
             document.getElementById('set-labour').value = defs.defaultLabour || 0.5;
         }
+        return !!biz;
     },
 
     async getBusiness() {
         const biz = await DB.getSetting('business');
-        return biz || this.defaults;
+        return biz || { ...this.defaults, isNew: true };
     },
 
     async getDefaults() {
@@ -64,14 +62,17 @@ const Settings = {
     async save() {
         const data = {
             bizName: document.getElementById('set-biz-name').value.trim(),
-            bizNameUrdu: document.getElementById('set-biz-name-urdu').value.trim(),
-            addressUrdu: document.getElementById('set-address-urdu').value.trim(),
+            address: document.getElementById('set-address').value.trim(),
             phone: document.getElementById('set-phone').value.trim(),
             ownerName: document.getElementById('set-owner-name').value.trim(),
             crops: document.getElementById('set-crops').value.trim(),
             expenseTypes: document.getElementById('set-expense-types').value.trim()
         };
         await DB.setSetting('business', data);
+        
+        // Update sidebar branding
+        document.getElementById('sidebar-biz-name').textContent = data.bizName || 'AgriSys';
+        
         Utils.showToast('Business settings saved!');
         App.populateCropSelects();
         App.populateExpenseTypeSelect();

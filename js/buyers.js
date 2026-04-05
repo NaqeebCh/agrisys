@@ -263,7 +263,7 @@ const Buyers = {
             doc.text((biz.bizName || 'AgriSys').toUpperCase(), 105, 15, { align: 'center' });
             doc.setFontSize(8);
             doc.setFont('helvetica', 'normal');
-            doc.text('Commission Shop / Agricultural Trader', 105, 21, { align: 'center' });
+            doc.text(biz.address || 'Agricultural Business Management', 105, 21, { align: 'center' });
             doc.text('Phone: ' + (biz.phone || '-'), 105, 26, { align: 'center' });
 
             doc.setLineWidth(0.8); doc.line(15, 29, 195, 29);

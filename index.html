@@ -22,7 +22,7 @@
         <div class="sidebar-header">
             <div class="sidebar-logo">A</div>
             <div>
-                <div class="sidebar-title">AgriSys</div>
+                <div class="sidebar-title" id="sidebar-biz-name">AgriSys</div>
                 <div class="sidebar-subtitle">Business Management</div>
             </div>
         </div>
@@ -79,7 +79,7 @@
                 <i data-lucide="settings"></i> Settings
             </div>
         </nav>
-        <div class="sidebar-footer">AgriSys v2.0 &copy; Saim Studios</div>
+        <div class="sidebar-footer">AgriSys v2.0 &copy; 2024</div>
     </aside>
 
     <!-- Main Content -->
@@ -506,11 +506,10 @@
             <div class="card" style="margin-bottom:20px">
                 <div class="card-header"><h3 class="card-title">Business Details</h3></div>
                 <div class="form-grid">
-                    <div class="form-group"><label class="form-label">Business Name (English)</label><input class="form-input" id="set-biz-name" placeholder="Saim Commission Shop"></div>
-                    <div class="form-group"><label class="form-label">Business Name (Urdu)</label><input class="form-input" id="set-biz-name-urdu" placeholder="صائم کمیشن شاپ" dir="rtl" style="font-family:var(--font-urdu);font-size:1.1rem"></div>
-                    <div class="form-group"><label class="form-label">Address (Urdu)</label><input class="form-input" id="set-address-urdu" placeholder="باٹی پاس چونیاں، چونیاں، ضلع قصور" dir="rtl" style="font-family:var(--font-urdu)"></div>
-                    <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="set-phone" placeholder="0300-1234567"></div>
-                    <div class="form-group"><label class="form-label">Owner Name</label><input class="form-input" id="set-owner-name" placeholder="Saim Ali"></div>
+                    <div class="form-group"><label class="form-label">Business Name</label><input class="form-input" id="set-biz-name" placeholder="Enter business name"></div>
+                    <div class="form-group"><label class="form-label">Business Address</label><input class="form-input" id="set-address" placeholder="Enter address"></div>
+                    <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" id="set-phone" placeholder="03xx-xxxxxxx"></div>
+                    <div class="form-group"><label class="form-label">Owner Name</label><input class="form-input" id="set-owner-name" placeholder="Enter owner name"></div>
                 </div>
                 <div class="form-group full-width" style="margin-top:16px">
                     <label class="form-label">Crop Types (comma separated)</label>
@@ -686,6 +685,43 @@
             </div>
         </div>
         <div class="modal-footer"><button class="btn btn-ghost" onclick="Utils.hideModal('tx-modal')">Cancel</button><button class="btn btn-primary" onclick="Capital.saveTransaction()">Save</button></div>
+    </div>
+</div>
+
+<!-- Welcome / Setup Modal -->
+<div class="modal-overlay" id="welcome-modal" style="pointer-events: auto; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px);">
+    <div class="modal" style="max-width: 550px; border: 1px solid var(--primary-color);">
+        <div class="modal-header" style="text-align: center; display: block; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;">
+            <div class="sidebar-logo" style="margin: 0 auto 15px; width: 60px; height: 60px; font-size: 2rem;">A</div>
+            <h2 class="modal-title" style="font-size: 1.8rem; margin-bottom: 8px;">Welcome to AgriSys</h2>
+            <p style="color: var(--text-muted);">Please set up your business details to get started.</p>
+        </div>
+        <div class="modal-body" style="padding: 30px 20px;">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label class="form-label">Business Name <span class="required">*</span></label>
+                    <input class="form-input" id="welcome-biz-name" placeholder="e.g. Al-Madina Agri Traders">
+                </div>
+                <div class="form-group full-width">
+                    <label class="form-label">Business Address <span class="required">*</span></label>
+                    <input class="form-input" id="welcome-address" placeholder="e.g. Main Bazar, Chilianwala District Mandi Bahauddin">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number <span class="required">*</span></label>
+                    <input class="form-input" id="welcome-phone" placeholder="03xx-xxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Owner Name</label>
+                    <input class="form-input" id="welcome-owner-name" placeholder="Your Name">
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--accent-warning); margin-top: 20px; text-align: center;">These details will appear on your PDF receipts and reports.</p>
+        </div>
+        <div class="modal-footer" style="padding: 0 20px 30px; border: none;">
+            <button class="btn btn-primary btn-lg" style="width: 100%;" onclick="App.saveWelcomeSettings()">
+                <i data-lucide="check-circle"></i> Complete Setup
+            </button>
+        </div>
     </div>
 </div>
 

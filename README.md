@@ -27,7 +27,7 @@ AgriSys is a premium, offline-first management application designed for agricult
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/AgriSys.git
+   git clone https://github.com/NaqeebCh/agrisys.git
    ```
 2. **Open the Project:**
    Simply open `index.html` in any modern web browser. No installation or `npm install` is required for basic use.
@@ -48,4 +48,4 @@ AgriSys is a premium, offline-first management application designed for agricult
 This project is open-source. (Suggest: MIT License)
 
 ---
-*Developed by Saim Studios*
+*Developed by Ch Naqeeb*

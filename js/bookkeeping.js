@@ -134,7 +134,7 @@ const Bookkeeping = {
             doc.text((biz.bizName || 'AgriSys').toUpperCase(), 105, 15, { align: 'center' });
             doc.setFontSize(8);
             doc.setFont('helvetica', 'normal');
-            doc.text('Commission Shop / Agricultural Trader', 105, 21, { align: 'center' });
+            doc.text(biz.address || 'Agricultural Business Management', 105, 21, { align: 'center' });
             if (biz.phone) doc.text('Phone: ' + biz.phone, 105, 25, { align: 'center' });
 
             const hEnd = biz.phone ? 27 : 23;

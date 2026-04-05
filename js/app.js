@@ -5,7 +5,19 @@ const App = {
     async init() {
         try {
             await DB.init();
-            await Settings.init();
+            const hasBusiness = await Settings.init();
+            
+            // Check for first-time visit
+            if (!hasBusiness) {
+                Utils.showModal('welcome-modal');
+                // Ensure sidebar is hidden or disabled to force focus on modal
+                document.querySelector('.sidebar').style.opacity = '0.3';
+                document.querySelector('.sidebar').style.pointerEvents = 'none';
+            } else {
+                const biz = await Settings.getBusiness();
+                document.getElementById('sidebar-biz-name').textContent = biz.bizName || 'AgriSys';
+            }
+
             await this.populateCropSelects();
             await this.populateExpenseTypeSelect();
             this.setupHashRouter();
@@ -27,6 +39,40 @@ const App = {
             console.error('Init error:', e);
             Utils.showToast('Failed to initialize: ' + e.message, 'error');
         }
+    },
+
+    async saveWelcomeSettings() {
+        const bizName = document.getElementById('welcome-biz-name').value.trim();
+        const phone = document.getElementById('welcome-phone').value.trim();
+        const address = document.getElementById('welcome-address').value.trim();
+        const owner = document.getElementById('welcome-owner-name').value.trim();
+
+        if (!bizName || !address || !phone) {
+            Utils.showToast('Please fill all required fields (*)', 'error');
+            return;
+        }
+
+        const data = {
+            bizName,
+            address,
+            phone,
+            ownerName: owner,
+            crops: 'Wheat,Rice,Cotton,Potato,Maize,Sugarcane,Misc',
+            expenseTypes: 'Labour,Transport,Diesel,Rent,Utility,Misc'
+        };
+
+        await DB.setSetting('business', data);
+        
+        // Update UI
+        document.getElementById('sidebar-biz-name').textContent = bizName;
+        document.querySelector('.sidebar').style.opacity = '1';
+        document.querySelector('.sidebar').style.pointerEvents = 'auto';
+        
+        Utils.hideModal('welcome-modal');
+        Utils.showToast('Welcome to AgriSys! Business setup complete.');
+        
+        // Refresh settings form if user is on settings page
+        await Settings.init();
     },
 
     navigate(section) {
